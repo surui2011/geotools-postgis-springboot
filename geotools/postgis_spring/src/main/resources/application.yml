@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: beta
+server:
+  port: 9999

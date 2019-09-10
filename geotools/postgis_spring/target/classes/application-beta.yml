@@ -1,0 +1,10 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mytest
+    username: postgres
+    password: 111111
+    driver-class-name: org.postgresql.Driver
+mybatis:
+  mapper-locations: classpath:mapper-postgresql/*.xml
+  type-aliases-package: com.example.postgis_spring.module
