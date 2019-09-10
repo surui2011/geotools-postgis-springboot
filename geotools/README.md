@@ -1,7 +1,7 @@
 _Documentation_
 =
-###### @Author - surui
-###### @Email - surui2011@163.com
+###### _@Author - surui_
+###### _@Email - surui2011@163.com_
 ***
 ### *Class*
 #### module
