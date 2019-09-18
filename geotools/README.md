@@ -55,3 +55,12 @@ _Documentation_
 * 2019-09-10 整合 springboot 和 postgis ，实现空间数据表相关功能
 * 2019-09-17 基于 postgresql 增加图层样式功能模块
 * 2019-09-18 增加多数据源配置，添加 mysql 从数据源迎合复杂业务场景
+
+### *PS*
+* sql迁移：
+  当存在自增id时：
+  postgresql转存的sql不能直接执行，会报错（关系 "styles.categoreis_id_seq" 不存在）
+  需要将
+  "id" int4 NOT NULL DEFAULT nextval('"styles".categoreis_id_seq'::regclass)
+  改为
+  "id" serial
