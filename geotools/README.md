@@ -4,6 +4,14 @@ _Documentation_
 ###### @Email - surui2011@163.com
 ***
 ### *Class*
+#### config
+* spring配置类，用于配置多数据源
+#### controller
+* PostgisController - 用于空间表的controller层
+* StyleController - 用于样式相关的controller层
+#### dao
+* mysql - mysql数据源的dao层
+* postgresql - postgresql数据源的dao层
 #### entity
 * Categories - 用于接收categories数据表
 * LayerStyle - 用于接收layer_style数据表
@@ -20,6 +28,8 @@ _Documentation_
 #### function
 * PostgisFunction - 统一管理postgis函数
 * GeotoolsFunction - 统一管理geotools函数（尚未使用）
+#### utils
+* 工具类
 #### service
 * PostgisService - 通过整合springboot，实现创建geojson和两种圈选（select及clip）
 * StyleService - style相关service
