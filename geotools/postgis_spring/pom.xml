@@ -43,6 +43,7 @@
             <artifactId>lombok</artifactId>
             <version>1.16.22</version>
         </dependency>
+        <!--sso-->
         <dependency>
             <groupId>com.qupdi.sso</groupId>
             <artifactId>client</artifactId>

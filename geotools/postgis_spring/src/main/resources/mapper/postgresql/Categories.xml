@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.postgis_spring.dao.postgresql.CategoriesDao">
+    <resultMap id="BaseResultMap" type="com.example.postgis_spring.entity.Categories">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="layer" property="layer" />
+        <result column="field" property="field" />
+        <result column="value" property="value" />
+        <result column="style_id" property="styleId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="comment" property="comment" />
+    </resultMap>
+    <sql id="filter">
+        <where>
+            <if test="filter!=null">
+                ${filter}
+                <!--<foreach collection="filterAnd" item="condition" separator=" and ">-->
+                <!--${condition}-->
+                <!--</foreach>-->
+            </if>
+            and enabled='t'
+        </where>
+    </sql>
+    <sql id="fields">
+        <choose>
+            <when test='fields!=null'>
+                <foreach collection="fields" item="field" separator=",">
+                    ${field}
+                </foreach>
+            </when>
+            <otherwise>
+                *
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="getCategories" resultMap="BaseResultMap" resultType="com.example.postgis_spring.entity.StyleDO">
+        select
+        <include refid="fields" />
+        from styles.categories
+        <include refid="filter" />
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from styles.categories
+        <include refid="filter" />
+    </select>
+</mapper>

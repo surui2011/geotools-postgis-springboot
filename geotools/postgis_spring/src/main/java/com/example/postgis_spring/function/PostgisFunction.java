@@ -37,11 +37,7 @@ public class PostgisFunction {
      * @Param
      */
     public Function ST_Intersects(Geom geom1, Geom geom2) {
-        return new Function("ST_Intersects('" + geom1 + "','" + geom2 + "')");
-    }
-
-    public Function ST_Intersects_SqlString(String geomSqlString1, String geomSqlString2) {
-        return new Function("ST_Intersects(" + geomSqlString1 + "," + geomSqlString2 + ")");
+        return new Function("ST_Intersects(" + geom1 + "," + geom2 + ")");
     }
 
     /**

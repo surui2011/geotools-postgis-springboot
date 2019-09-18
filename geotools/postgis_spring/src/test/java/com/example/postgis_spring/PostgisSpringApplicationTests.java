@@ -1,10 +1,11 @@
 package com.example.postgis_spring;
 
-import com.alibaba.fastjson.JSONObject;
-import com.example.postgis_spring.dao.PostgisDao;
-import com.example.postgis_spring.function.PostgisFunction;
-import com.example.postgis_spring.module.*;
+import com.example.postgis_spring.dao.mysql.TestDao;
+import com.example.postgis_spring.dao.postgresql.LayerStyleDao;
+import com.example.postgis_spring.dao.postgresql.PostgisDao;
+import com.example.postgis_spring.dao.postgresql.StyleDao;
 import com.example.postgis_spring.service.PostgisService;
+import com.example.postgis_spring.service.StyleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,27 +21,28 @@ public class PostgisSpringApplicationTests {
     PostgisDao postgisDao;
     @Resource
     PostgisService postgisService;
+    @Resource
+    StyleDao styleDao;
+    @Resource
+    LayerStyleDao layerStyleDao;
+    @Resource
+    StyleService styleService;
+    @Resource
+    TestDao testDao;
 
     @Test
     public void test() throws Exception {
-        Ewkt ewkt = Ewkt.builder()
-                .WKT("POLYGON((40527326 3992110, 40527489 3992114, 40527555 3991986, 40527326 3992110))")
-                .SRID(4528)
-                .build();
-        Geom createGeom = postgisService.ST_GeomFromEWKT(ewkt);
-        Params params = new Params().put("select", new PostgisFunction().ST_AsGeoJSON(createGeom));
-        System.out.println(postgisDao.getGeoJson(params));
-//        Geom geom = postgisService.findByid(5);
-//        boolean result = postgisService.ifIntersect(createGeom, geom);
-        MyList properties = new MyList().add("gid").add("name");
-        JSONObject result = postgisService.clipByPolygonWithProperties(createGeom, properties, "qujie");
-        System.out.println(result);
+        List styleList = styleDao.getStyle(null);
+        List mysqlList = testDao.getData(null);
+        System.out.println(styleList);
+        System.out.println(mysqlList);
+    }
+
+    @Test
+    public void test1() {
     }
 
     public static void main(String[] args) throws Exception {
-        PostgisFunction postgisFunction = new PostgisFunction();
-        List list = SqlConstant.TRUE.getValues();
-        System.out.println(list.contains("4"));
     }
 
 }

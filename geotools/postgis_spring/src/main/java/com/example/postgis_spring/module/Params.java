@@ -12,6 +12,7 @@ import java.util.HashMap;
  * function：函数部分
  * table：   表名
  * fields：  要查的字段list（默认为*）
+ * geom：    postgis中的geom
  */
 public class Params extends HashMap {
 

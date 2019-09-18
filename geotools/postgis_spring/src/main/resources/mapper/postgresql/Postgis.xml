@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.postgis_spring.dao.postgresql.PostgisDao">
+
+    <sql id="filter">
+        <where>
+        <if test="filter!=null">
+            ${filter}
+            <!--<foreach collection="filterAnd" item="condition" separator=" and ">-->
+                <!--${condition}-->
+            <!--</foreach>-->
+        </if>
+        </where>
+    </sql>
+    <sql id="fields">
+        <choose>
+            <when test='fields!=null'>
+                <foreach collection="fields" item="field" separator=",">
+                    ${field}
+                </foreach>
+            </when>
+            <otherwise>
+                *
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="getFeatureInfo" resultType="java.util.Map">
+        select
+        <include refid="fields" />
+        <if test="table!=null">
+            from ${table}
+        </if>
+        <include refid="filter" />
+    </select>
+
+    <select id="getGeoJson" resultType="String">
+        select row_to_json(row)
+        from (
+            select
+                'FeatureCollection' as "type",
+                array_to_json(array_agg(f)) as "features"
+            from (
+                select
+                    'Feature' as "type"
+                    <choose>
+                        <when test="geom!=null" >
+                            ,ST_AsGeoJSON(${geom})
+                        </when>
+                        <otherwise>
+--                             ,ST_AsGeoJSON(ST_Transform(way, 4326), 6) :: json as "geometry",
+                            ,ST_AsGeoJSON(t.geom)
+                        </otherwise>
+                    </choose>
+                    :: json as "geometry"
+                    <if test="fields!=null">
+                        ,
+                        (
+                            select json_strip_nulls(row_to_json(fs))
+                            from (
+                                select
+                                    <include refid="fields" />
+                            ) fs
+                        ) as "properties"
+                    </if>
+                    <if test="table!=null">
+                      from ${table} t
+                    </if>
+                <include refid="filter" />
+            ) as f
+        ) as row;
+    </select>
+</mapper>

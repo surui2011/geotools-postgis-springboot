@@ -84,6 +84,17 @@
             <artifactId>guava</artifactId>
             <version>20.0</version>
         </dependency>
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>mysql</groupId>-->
+        <!--<artifactId>mysql-connector-java</artifactId>-->
+        <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
 
     </dependencies>
 
